@@ -21,5 +21,5 @@ Credits: Maria Gimeno Freixas, Gian Andrea Rossi — produced for the second yea
 ### Contour evolution
 ![Contour animation](output/contour.gif)
 
-### Example wave profile along midplane
+### Example wave profile along x midplane
 ![Wave profile](output/midplane_t60.png)
