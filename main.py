@@ -1,23 +1,20 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# In[ ]:
-
-
-# In this section I am importing all the libraries I will need
 import numpy as np
 import matplotlib.pyplot as pl
 from matplotlib.ticker import LinearLocator
 from PIL import Image
 import time
+import os
 
-start=time.time()                   #start the time count for the numericla method computation
+start=time.time()                   #start the time count for the numerical method computation
+
+# Create output folder if it doesn't exist
+os.makedirs('output', exist_ok=True)
 
 # In this section I am setting the domain of solution and the discretised grid
 A=0                                 #starting point (lower bound of the domain)
 B=1                                 #upper bound of space domain
 C=1                                 #upper bound of time domain
-N=71                                #space nodes in each direction
+N=100                               #space nodes in each direction
 h=(B-A)/(N-1)                       #grid size
 k=0.001                             #time step
 k_check=h/np.sqrt(2)                #time step to check for convergence
@@ -41,7 +38,6 @@ fx=np.zeros((len(x),len(y)))               #setting an array to assign the sarti
 # In this section I am setting the boundary conditions/initial values
 def f(x,y):
     return (0.5*np.exp(-700*((x-0.5)**2+(y-0.15)**2)))      #function to describe the initial condition
-
 
 for i in range(len(x)):
     for j in range(len(y)):
@@ -70,9 +66,9 @@ print('Time elapsed to compute the numerical method is ',round(end-start,2),'s')
 
 
 # In this section I am showing the results
-print('The mesh size is h=', round(h,5))                           #print info on mesh size
-print('The time step is k=', round(k,5))                           #print info on time step
-print('The max time step is k_max=', round(k_check,5))             #print info on time step convergent
+print('The mesh size is h =', round(h,5))                           #print info on mesh size
+print('The time step is k =', round(k,5))                           #print info on time step
+print('The max time step is k_max =', round(k_check,5))             #print info on time step convergent
 
 #sliced plane development plot
 pts=[0,60,100,180,250]                                             #some instants are chosen to be plotted
@@ -83,7 +79,8 @@ for item in pts:
 parallel to x')                                                    #plot title
     pl.xlabel('"y" side')                                          #label the x axis
     pl.ylabel('u')                                                 #label the y axis
-    pl.show()                                                      #show the plot
+    pl.savefig(f"output/midplane_t{item}.png")                     #save the plot to output folder
+    pl.close()                                                     #close the plot
 
 
 
@@ -101,29 +98,26 @@ for n in range(frames):                                        #Generate each fr
     ax.set_xlabel('x')                                         #label the x axis
     ax.set_ylabel('y')                                         #label the y axis
     ax.set_zlabel('u')                                         #label the z axis (function u)
-    pl.savefig(f"{n}.png")                                     #save each frame
+    pl.savefig(f"output/{n}.png")                              #save each frame to output folder
     pl.close()                                                 #close the plot
     
     pl.contourf(X, Y, u[nt,:,:], cmap='Blues')                 #plot the contour
     pl.title('contour development')                            #plot title
     pl.xlabel('x')                                             #label the x axis
     pl.ylabel('y')                                             #label the y axis
-    pl.savefig(f"c{n}.png")                                    #save each frame
+    pl.savefig(f"output/c{n}.png")                             #save each frame to output folder
     pl.close()                                                 #close the plot
     
     nt+=1                                                      #increment the time for the frame
 
-images = [Image.open(f"{n}.png") for n in range(frames)]       #Use pillow to iterate through all frames
-images[0].save('wave.gif', save_all=True, append_images=images[1:], duration=60, loop=0)    #saving all frames as an animation in a gif file
+images = [Image.open(f"output/{n}.png") for n in range(frames)]       #Use pillow to iterate through all frames
+images[0].save('output/wave.gif', save_all=True, append_images=images[1:], duration=60, loop=0)    #saving all frames as an animation in a gif file
 
     
-images_c = [Image.open(f"c{n}.png") for n in range(frames)]       #Use pillow to iterate through all frames
-images_c[0].save('contour.gif', save_all=True, append_images=images_c[1:], duration=60, loop=0)    #saving all frames as an animation in a gif file
+images_c = [Image.open(f"output/c{n}.png") for n in range(frames)]       #Use pillow to iterate through all frames
+images_c[0].save('output/contour.gif', save_all=True, append_images=images_c[1:], duration=60, loop=0)    #saving all frames as an animation in a gif file
 
 
 
 # In this section I am celebrating
-print('CW done: I deserve a good mark')
-
-
-# %%
+print('Done')
