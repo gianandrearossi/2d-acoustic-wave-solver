@@ -1,5 +1,25 @@
-# 2D Acoustic Wave Solver
+# 2D Acoustic Wave Propagation in a Confined Space
 
-Numerical simulation of 2D acoustic wave propagation in a confined space using explicit finite differences in Python.
+This project models acoustic wave propagation in a 2D room by solving the 
+2D wave equation using an explicit finite difference scheme with central 
+differences in both space and time.
+The results capture wave reflection off rigid walls and highlight phenomena 
+such as constructive and destructive interference.
 
-An explicit finite difference scheme is used with central differences in both space and time. The simulation models an instantaneous point source (modelled as a Gaussian) reflecting off perfectly rigid walls (Dirichlet boundary conditions). Results include 3D surface plots, contour plots, and animated GIFs.
+The full project description, derivations, and analysis are available in the report:  
+[Full Project Report (PDF)](./ME2_Computing_Coursework.pdf)
+
+Credits: Gimeno Freixas, Gian Andrea Rossi — ME2 Computing Coursework 2023/24, Imperial College London
+
+---
+
+## Visualisations
+
+### 3D Wave surface evolution
+![Wave animation](./wave.gif)
+
+### Contour evolution
+![Contour animation](./contour.gif)
+
+### Example wave profile along midplane
+![Wave profile](./result.png)
