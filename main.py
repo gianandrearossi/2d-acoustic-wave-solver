@@ -70,9 +70,11 @@ print('The mesh size is h =', round(h,5))                           #print info 
 print('The time step is k =', round(k,5))                           #print info on time step
 print('The max time step is k_max =', round(k_check,5))             #print info on time step convergent
 
+contour_size_inches = 6                                             #size to match contour gif dimensions
 #sliced plane development plot
 pts=[0,60,100,180,250]                                             #some instants are chosen to be plotted
 for item in pts:
+    fig = pl.figure(figsize=(contour_size_inches, contour_size_inches) if item == 60 else pl.rcParams['figure.figsize'])  #match gif size for t=60 only
     pl.plot(y,u[item,int(0.5/h),:])                                #plot the surface sliced in the mid plane
     pl.grid(which='both')                                          #plot the grid
     if item != 60:
@@ -91,7 +93,6 @@ parallel to x')                                                    #plot title (
 #create a gif to see the evolution in 2D
 frames = 200                                                   #set the number of frames
 nt=0                                                           #start the gif at time 0
-contour_size_inches = 6                                        #size to match contour gif dimensions
 for n in range(frames):                                        #Generate each frame
     fig = pl.figure(figsize=(contour_size_inches, contour_size_inches))   #match size of contour gif
     ax = fig.add_subplot(111, projection='3d')                 #create subplot
