@@ -9,17 +9,17 @@ such as constructive and destructive interference.
 The full project description, derivations, and analysis are available in the report:  
 [Full Project Report (PDF)](./ME2_Computing_Coursework.pdf)
 
-Credits: Gimeno Freixas, Gian Andrea Rossi — ME2 Computing Coursework 2023/24, Imperial College London
+Credits: Maria Gimeno Freixas, Gian Andrea Rossi — produced for the second year Computing module at Imperial College London, Department of Mechanical Engineering. 
 
 ---
 
 ## Visualisations
 
 ### 3D Wave surface evolution
-![Wave animation](./wave.gif)
+![Wave animation](output/wave.gif)
 
 ### Contour evolution
-![Contour animation](./contour.gif)
+![Contour animation](output/contour.gif)
 
 ### Example wave profile along midplane
-![Wave profile](./result.png)
+![Wave profile](output/midplane_t60.png)
