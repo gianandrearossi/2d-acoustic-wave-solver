@@ -75,10 +75,14 @@ pts=[0,60,100,180,250]                                             #some instant
 for item in pts:
     pl.plot(y,u[item,int(0.5/h),:])                                #plot the surface sliced in the mid plane
     pl.grid(which='both')                                          #plot the grid
-    pl.title('Acoustic wave profile along midplane \
-parallel to x')                                                    #plot title
-    pl.xlabel('"y" side')                                          #label the x axis
-    pl.ylabel('u')                                                 #label the y axis
+    if item != 60:
+        pl.title('Acoustic wave profile along midplane \
+parallel to x')                                                    #plot title (skip for t=60)
+    pl.xlabel('y')                                                 #label the x axis
+    pl.ylabel('Amplitude')                                         #label the y axis (renamed from 'u')
+    pl.xlim(0, 1)                                                  #set x axis range from 0 to 1
+    ax = pl.gca()
+    ax.yaxis.set_ticklabels([])                                    #hide vertical axis tick values
     pl.savefig(f"output/midplane_t{item}.png")                     #save the plot to output folder
     pl.close()                                                     #close the plot
 
@@ -87,8 +91,9 @@ parallel to x')                                                    #plot title
 #create a gif to see the evolution in 2D
 frames = 200                                                   #set the number of frames
 nt=0                                                           #start the gif at time 0
+contour_size_inches = 6                                        #size to match contour gif dimensions
 for n in range(frames):                                        #Generate each frame
-    fig = pl.figure(figsize=(10, 10))                          #create figure and set size
+    fig = pl.figure(figsize=(contour_size_inches, contour_size_inches))   #match size of contour gif
     ax = fig.add_subplot(111, projection='3d')                 #create subplot
     ax.plot_surface(X, Y, u[nt], cmap='Blues',                 
                        linewidth=0, antialiased=False)         #plot the surface
@@ -97,16 +102,21 @@ for n in range(frames):                                        #Generate each fr
     ax.zaxis.set_major_formatter('{x:.02f}')                   #formatting of the z axis
     ax.set_xlabel('x')                                         #label the x axis
     ax.set_ylabel('y')                                         #label the y axis
-    ax.set_zlabel('u')                                         #label the z axis (function u)
+    ax.set_zlabel('Amplitude')                                 #label the z axis (renamed from 'u')
+    ax.set_xticklabels([])                                     #hide x axis tick values
+    ax.set_yticklabels([])                                     #hide y axis tick values
+    ax.set_zticklabels([])                                     #hide z (amplitude) axis tick values
     pl.savefig(f"output/{n}.png")                              #save each frame to output folder
     pl.close()                                                 #close the plot
     
-    pl.contourf(X, Y, u[nt,:,:], cmap='Blues')                 #plot the contour
-    pl.title('contour development')                            #plot title
-    pl.xlabel('x')                                             #label the x axis
-    pl.ylabel('y')                                             #label the y axis
+    fig, ax2d = pl.subplots(figsize=(contour_size_inches, contour_size_inches))  #square figure matching 3D gif size
+    ax2d.contourf(X, Y, u[nt,:,:], cmap='Blues')               #plot the contour
+    ax2d.set_aspect('equal')                                    #make both axes the same dimension
+    ax2d.set_xlabel('x')                                        #label the x axis
+    ax2d.set_ylabel('y')                                        #label the y axis
+    # no title for contour plot
     pl.savefig(f"output/c{n}.png")                             #save each frame to output folder
-    pl.close()                                                 #close the plot
+    pl.close()                                                  #close the plot
     
     nt+=1                                                      #increment the time for the frame
 
